@@ -16,6 +16,7 @@ env:
   REPO_BRANCH: 25.12
   CONFIG_FILE: configs/n60pro.config
   DIY_P1_SH: scripts/diy-part1.sh
+  DIY_P2_SH: scripts/diy-part2.sh
 
 permissions: write-all
 
@@ -68,11 +69,19 @@ jobs:
           echo "=== source head ==="
           git log -1 --format='%h %s (%cd)' --date=short
 
-      - name: Apply QModem feed
+      - name: Apply QModem feed + 512ROM profile
         working-directory: openwrt
         run: |
-          chmod +x $GITHUB_WORKSPACE/$DIY_P1_SH
+          chmod +x $GITHUB_WORKSPACE/$DIY_P1_SH $GITHUB_WORKSPACE/$DIY_P2_SH
           $GITHUB_WORKSPACE/$DIY_P1_SH
+          $GITHUB_WORKSPACE/$DIY_P2_SH
+
+      - name: Copy files overlay
+        run: |
+          if [ -d "$GITHUB_WORKSPACE/files" ]; then
+            cp -r $GITHUB_WORKSPACE/files/* openwrt/
+          fi
+          ls openwrt/target/linux/mediatek/dts/ | grep 512rom
 
       - name: Update & install feeds
         working-directory: openwrt

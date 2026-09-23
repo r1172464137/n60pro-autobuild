@@ -9,6 +9,7 @@
 - 全协议模组驱动: QMI / MBIM / NCM / ECM / RNDIS / serial-option（移远、中兴、华为等 USB 模组通吃）
 - USB3.0 + UAS 存储 + automount（可插 U 盘扩容）
 - MTK HNAT 硬件加速（`luci-app-turboacc-mtk`，支持 USB 模组做 WAN）
+- 512MB 闪存大分区布局（ubi=490MB 吃满，适配恩山 WildEdition U-Boot `506.5MB` 分区表）
 
 ## 使用
 
